@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GifTastic</title>
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>GifTastic: Disney Movies</h1>
+
+        <div id="buttons-view"></div>
+
+        <form id="movie-form">
+            <label for="movie-input">Search Favorite Disney Movie</label>
+            <input type="text" id="movie-input"><br>
+            <input id="add-movie" type="submit" value="Search">
+        </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            var movies = ["Mulan", "Beauty and the Beast", "Ants", "The Lion King"];
+
+
+            function renderButtons() {
+
+
+                $("#buttons-view").empty();
+
+
+                for (var i = 0; i < movies.length; i++) {
+
+
+                    var a = $("<button>");
+
+                    a.addClass("movie");
+
+                    a.attr("data-name", movies[i]);
+
+                    a.text(movies[i]);
+
+                    $("#buttons-view").append(a);
+                }
+            }
+
+
+        </script>
+    </div>
+</body>
+
+</html>
+</body>
