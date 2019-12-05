@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>GifTastic</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <style type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style type="text/css">
         button,
         div,
         form,
@@ -16,84 +17,84 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>GifTastic: Disney Movies</h1>
 
-        <div id="buttons-view"></div>
+    <h1>GifTastic: Disney Movies</h1>
 
-        <form id="movie-form">
-            <label for="movie-input">Search Favorite Disney Movie</label>
-            <input type="text" id="movie-input"><br>
-            <input id="add-movie" type="submit" value="Search">
-        </form>
-        <br>
-        <div class="row" id="gifs-appear-here"></div>
+    <div class="col-md-5" style="float: right" id="buttons-view"></div>
+  
+    <form  class="col-md-5" style="float: right" id="movie-form">
+        <label for="movie-input">Search Favorite Disney Movie</label>
+        <input type="text" id="movie-input"><br>
+        <input id="add-movie" type="submit" value="Search">
+    </form>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript">
+    <div class="row" id="gifs-appear-here"></div>
 
-            var movies = ["Mulan", "Beauty and the Beast", "Ants", "The Lion King"];
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 
-
-            function renderButtons() {
+        var movies = ["Mulan", "Beauty and the Beast", "Ants", "The Lion King"];
 
 
-                $("#buttons-view").empty();
+        function renderButtons() {
 
 
-                for (var i = 0; i < movies.length; i++) {
+            $("#buttons-view").empty();
 
 
-                    var a = $("<button>");
+            for (var i = 0; i < movies.length; i++) {
 
-                    a.addClass("movie");
 
-                    a.attr("data-name", movies[i]);
+                var a = $("<button>");
 
-                    a.text(movies[i]);
+                a.addClass("movie");
 
-                    $("#buttons-view").append(a);
+                a.attr("data-name", movies[i]);
+
+                a.text(movies[i]);
+
+                $("#buttons-view").append(a);
+            }
+        }
+
+        renderButtons()
+
+        function queryURL(movie) {
+            var apiKey = "RZcEPV7soZ66qQkXe3QFjeLh7X6bVEVf"
+
+            var url = "http://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&limit=10&q=" + movie
+            return url
+        }
+
+        $(document).on("click", "button", function () {
+            console.log(this)
+            var movie = $(this).attr("data-name").split(" ").join("+")
+            var queryUrl = queryURL(movie)
+            $.ajax({
+                type: "GET",
+                url: queryUrl
+            }).then(function (response) {
+
+                var results = response.data;
+                for (var i = 0; i < results.length; i++) {
+                    console.log(results[i])
+                    var gifDiv = $("<div>");
+                    gifDiv.attr("class", "col-lg")
+                    var rating = results[i].rating;
+                    var p = $("<p>").text("Rating:" + rating);
+                    var movieImage = $("<img>");
+                    movieImage.attr("src", results[i].images.fixed_height.url);
+                    gifDiv.append(p);
+                    gifDiv.append(movieImage)
+                    console.log(gifDiv)
+                    $("#gifs-appear-here").prepend(gifDiv);
+
                 }
-            }
+            })
+        });
 
-            renderButtons()
+    </script>
 
-            function queryURL(movie) {
-                var apiKey = "RZcEPV7soZ66qQkXe3QFjeLh7X6bVEVf"
-
-                var url = "http://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&limit=10&q=" + movie
-                return url
-            }
-
-            $(document).on("click", "button", function () {
-                console.log(this)
-                var movie = $(this).attr("data-name").split(" ").join("+")
-                var queryUrl = queryURL(movie)
-                $.ajax({
-                    type: "GET",
-                    url: queryUrl
-                }).then(function (response) {
-
-                    var results = response.data;
-                    for (var i = 0; i < results.length; i++) {
-                        console.log(results[i])
-                        var gifDiv = $("<div>");
-                        gifDiv.attr("class", "col-lg-4")
-                        var rating = results[i].rating;
-                        var p = $("<p>").text("Rating:" + rating);
-                        var movieImage = $("<img>");
-                        movieImage.attr("src", results[i].images.downsized_still.url);
-                        gifDiv.append(p);
-                        gifDiv.append(movieImage)
-                        console.log(gifDiv)
-                        $("#gifs-appear-here").prepend(gifDiv);
-
-                    }
-                })
-            });
-
-        </script>
-    </div>
 </body>
 
 </html>
