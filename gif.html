@@ -21,10 +21,13 @@
     <h1>GifTastic: Disney Movies</h1>
 
     <div class="col-md-5" style="float: right" id="buttons-view"></div>
-  
-    <form  class="col-md-5" style="float: right" id="movie-form">
+
+    <form class="col-md-5" style="float: right" id="movie-form">
+
         <label for="movie-input">Search Favorite Disney Movie</label>
-        <input type="text" id="movie-input"><br>
+
+        <input type="text" id="movie-input">
+
         <input id="add-movie" type="submit" value="Search">
     </form>
 
@@ -33,8 +36,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
-        var movies = ["Mulan", "Beauty and the Beast", "Ants", "The Lion King"];
-
+        var movies = ["Mulan", "Beauty and the Beast", "The Little Mermaid", "The Lion King"];
+        var numberOfGifs = 10;
+        // var cutOffRating = "PG";
 
         function renderButtons() {
 
@@ -90,8 +94,13 @@
                     $("#gifs-appear-here").prepend(gifDiv);
 
                 }
-            })
+                $(document).ready(function () {
+                    renderButtons();
+                    $
+                })
+        })
         });
+
 
     </script>
 
